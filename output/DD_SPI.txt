@@ -1,0 +1,83 @@
+# DD_HEADER | spi.h | Generated: 2026-04-29
+# Source file: spi.h
+#
+# COLUMNS per record type:
+#   SECTION    | Title
+#   DEFINE     | Name|Value|DataType|Size(B)|ObjectText|Description
+#   DEFINE_FUNC| Name|Value|DataType|Size(B)|ObjectText|Description
+#   TYPEDEF    | Name|AliasOf|DataType|Size(B)|ObjectText|Description
+#   ENUM       | Name|DataType|Size(B)|ObjectText|Description
+#   ENUM_VAL   | EnumName|ValName|Value
+#   STRUCT     | Name|DataType|Size(B)|ObjectText|Description
+#   STRUCT_FIELD| StructName|FieldName|DataType|Size(B)|BitWidth
+#   UNION      | Name|DataType|Size(B)|ObjectText|Description
+#   UNION_FIELD| UnionName|FieldName|DataType|Size(B)|BitWidth
+#   FUNCPTR    | Name|ReturnType|Params|Size(B)|ObjectText|Description
+#   INLINE     | Name|ReturnType|Params|Size(B)|ObjectText|Description
+#
+SECTION|Preprocessor Macros
+DEFINE|SPI_INSTANCE_COUNT|3U|int|4|Macro SPI_INSTANCE_COUNT is defined as 3U|Maximum number of SPI peripheral instances on the target.
+DEFINE|SPI_TIMEOUT_DEFAULT_MS|100U|int|4|Macro SPI_TIMEOUT_DEFAULT_MS is defined as 100U|Default blocking transfer timeout in milliseconds.
+DEFINE|SPI_PRESCALER_MAX|256U|int|4|Macro SPI_PRESCALER_MAX is defined as 256U|Maximum clock prescaler supported by the peripheral (PCLK / 256).
+SECTION|Enumerations
+ENUM|SPI_Instance|enum (int)|4|SPI_Instance is an enumeration type|SPI peripheral instance selector.
+ENUM_VAL|SPI_Instance|SPI_INSTANCE_1|0
+ENUM_VAL|SPI_Instance|SPI_INSTANCE_2|1
+ENUM_VAL|SPI_Instance|SPI_INSTANCE_3|2
+ENUM|SPI_ClockPolarity|enum (int)|4|SPI_ClockPolarity is an enumeration type|SPI clock polarity (CPOL). Defines the idle state of the clock line between transfers.
+ENUM_VAL|SPI_ClockPolarity|SPI_CPOL_LOW|0
+ENUM_VAL|SPI_ClockPolarity|SPI_CPOL_HIGH|1
+ENUM|SPI_ClockPhase|enum (int)|4|SPI_ClockPhase is an enumeration type|SPI clock phase (CPHA). Defines on which clock edge data is sampled.
+ENUM_VAL|SPI_ClockPhase|SPI_CPHA_1EDGE|0
+ENUM_VAL|SPI_ClockPhase|SPI_CPHA_2EDGE|1
+ENUM|SPI_Mode|enum (int)|4|SPI_Mode is an enumeration type|Combined SPI mode (CPOL + CPHA). The four standard SPI modes derived from polarity and phase combinations.
+ENUM_VAL|SPI_Mode|SPI_MODE_0|0
+ENUM_VAL|SPI_Mode|SPI_MODE_1|1
+ENUM_VAL|SPI_Mode|SPI_MODE_2|2
+ENUM_VAL|SPI_Mode|SPI_MODE_3|3
+ENUM|SPI_DataSize|enum (int)|4|SPI_DataSize is an enumeration type|Data frame size.
+ENUM_VAL|SPI_DataSize|SPI_DATASIZE_8BIT|8
+ENUM_VAL|SPI_DataSize|SPI_DATASIZE_16BIT|16
+ENUM|SPI_BitOrder|enum (int)|4|SPI_BitOrder is an enumeration type|Bit transmission order.
+ENUM_VAL|SPI_BitOrder|SPI_BITORDER_MSB|0
+ENUM_VAL|SPI_BitOrder|SPI_BITORDER_LSB|1
+ENUM|SPI_NSSMode|enum (int)|4|SPI_NSSMode is an enumeration type|NSS (chip-select) management strategy.
+ENUM_VAL|SPI_NSSMode|SPI_NSS_SOFT|0
+ENUM_VAL|SPI_NSSMode|SPI_NSS_HARD_IN|1
+ENUM_VAL|SPI_NSSMode|SPI_NSS_HARD_OUT|2
+ENUM|SPI_StatusFlag|enum (int)|4|SPI_StatusFlag is an enumeration type|Status flags – can be OR'd together.
+ENUM_VAL|SPI_StatusFlag|SPI_STATUS_OK|0x00U
+ENUM_VAL|SPI_StatusFlag|SPI_STATUS_TX_BUSY|0x01U
+ENUM_VAL|SPI_StatusFlag|SPI_STATUS_RX_BUSY|0x02U
+ENUM_VAL|SPI_StatusFlag|SPI_STATUS_OVERRUN|0x04U
+ENUM_VAL|SPI_StatusFlag|SPI_STATUS_MODE_ERR|0x08U
+ENUM_VAL|SPI_StatusFlag|SPI_STATUS_CRC_ERR|0x10U
+ENUM_VAL|SPI_StatusFlag|SPI_STATUS_TIMEOUT|0x20U
+ENUM|SPI_Status|enum (int)|4|SPI_Status is an enumeration type|Driver return codes.
+ENUM_VAL|SPI_Status|SPI_OK|0
+ENUM_VAL|SPI_Status|SPI_ERR_PARAM|-1
+ENUM_VAL|SPI_Status|SPI_ERR_BUSY|-2
+ENUM_VAL|SPI_Status|SPI_ERR_TIMEOUT|-3
+ENUM_VAL|SPI_Status|SPI_ERR_OVERRUN|-4
+ENUM_VAL|SPI_Status|SPI_ERR_CRC|-5
+ENUM_VAL|SPI_Status|SPI_ERR_HW|-6
+SECTION|Structures
+STRUCT|SPI_Config|struct SPI_Config|?|SPI_Config is a structure type|SPI peripheral configuration snapshot. Pass a pointer to an initialised instance to SPI_Init(). All fields are copied into the handle and must not be modified afterwards.
+STRUCT_FIELD|SPI_Config|instance|SPI_Instance|?|0
+STRUCT_FIELD|SPI_Config|mode|SPI_Mode|?|0
+STRUCT_FIELD|SPI_Config|data_size|SPI_DataSize|?|0
+STRUCT_FIELD|SPI_Config|bit_order|SPI_BitOrder|?|0
+STRUCT_FIELD|SPI_Config|nss_mode|SPI_NSSMode|?|0
+STRUCT_FIELD|SPI_Config|clock_hz|uint32_t|4|0
+STRUCT_FIELD|SPI_Config|crc_enable|bool|1|0
+STRUCT_FIELD|SPI_Config|crc_poly|uint16_t|2|0
+STRUCT_FIELD|SPI_Config|xfer_cb|SPI_TransferCallback|?|0
+STRUCT_FIELD|SPI_Config|error_cb|SPI_ErrorCallback|?|0
+STRUCT|SPI_Handle|struct SPI_Handle|?|SPI_Handle is a structure type|Runtime handle for a single SPI peripheral instance. Allocate statically or on the heap. Pass a pointer to all SPI API calls. Treat all fields as read-only from application code.
+STRUCT_FIELD|SPI_Handle|config|SPI_Config|?|0
+STRUCT_FIELD|SPI_Handle|status_flags|uint32_t|4|0
+STRUCT_FIELD|SPI_Handle|actual_clk_hz|uint32_t|4|0
+STRUCT_FIELD|SPI_Handle|initialized|bool|1|0
+SECTION|Function Pointer Types
+FUNCPTR|SPI_TransferCallback|void|SPI_Instance instance,                                      const uint8_t *tx_data,                                      uint8_t *rx_data,                                      size_t len|8|SPI_TransferCallback is a function pointer: void (*SPI_TransferCallback)(SPI_Instance instance,                                      const uint8_t *tx_data,                                      uint8_t *rx_data,                                      size_t len)|Callback invoked when a non-blocking transfer (IT or DMA) completes.
+FUNCPTR|SPI_ErrorCallback|void|SPI_Instance instance, uint32_t flags|8|SPI_ErrorCallback is a function pointer: void (*SPI_ErrorCallback)(SPI_Instance instance, uint32_t flags)|Callback invoked when the driver detects an error condition.

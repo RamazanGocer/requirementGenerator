@@ -1,0 +1,93 @@
+# DD_HEADER | gpio.h | Generated: 2026-04-29
+# Source file: gpio.h
+#
+# COLUMNS per record type:
+#   SECTION    | Title
+#   DEFINE     | Name|Value|DataType|Size(B)|ObjectText|Description
+#   DEFINE_FUNC| Name|Value|DataType|Size(B)|ObjectText|Description
+#   TYPEDEF    | Name|AliasOf|DataType|Size(B)|ObjectText|Description
+#   ENUM       | Name|DataType|Size(B)|ObjectText|Description
+#   ENUM_VAL   | EnumName|ValName|Value
+#   STRUCT     | Name|DataType|Size(B)|ObjectText|Description
+#   STRUCT_FIELD| StructName|FieldName|DataType|Size(B)|BitWidth
+#   UNION      | Name|DataType|Size(B)|ObjectText|Description
+#   UNION_FIELD| UnionName|FieldName|DataType|Size(B)|BitWidth
+#   FUNCPTR    | Name|ReturnType|Params|Size(B)|ObjectText|Description
+#   INLINE     | Name|ReturnType|Params|Size(B)|ObjectText|Description
+#
+SECTION|Preprocessor Macros
+DEFINE|GPIO_MAX_CALLBACKS|16U|int|4|Macro GPIO_MAX_CALLBACKS is defined as 16U|Maximum number of IRQ callbacks that can be registered per pin.
+DEFINE|GPIO_DEBOUNCE_MS|10U|int|4|Macro GPIO_DEBOUNCE_MS is defined as 10U|Debounce filter time in milliseconds for interrupt inputs.
+DEFINE|GPIO_PIN_ALL|0xFFFFU|uint32_t|4|Macro GPIO_PIN_ALL is defined as 0xFFFFU|Bit mask for all 16 pins of a GPIO port.
+DEFINE_FUNC|GPIO_PIN(n)|(1U << (n))|macro (function-like)|0|Function-like macro GPIO_PIN(n) expands to: (1U << (n))|Helper macro – set a single pin bit from pin number (0-15).
+DEFINE_FUNC|GPIO_IS_SET(val, pin)|(((val) & (pin)) != 0U)|macro (function-like)|0|Function-like macro GPIO_IS_SET(val, pin) expands to: (((val) & (pin)) != 0U)|Read the logical state of a bitmask pin after GPIO_Read().
+SECTION|Enumerations
+ENUM|GPIO_Port|enum (int)|4|GPIO_Port is an enumeration type|Available GPIO port identifiers. Maps to the physical port base addresses on the target MCU. Port F and above are only present on devices with ≥144 pins.
+ENUM_VAL|GPIO_Port|GPIO_PORT_A|0
+ENUM_VAL|GPIO_Port|GPIO_PORT_B|1
+ENUM_VAL|GPIO_Port|GPIO_PORT_C|2
+ENUM_VAL|GPIO_Port|GPIO_PORT_D|3
+ENUM_VAL|GPIO_Port|GPIO_PORT_E|4
+ENUM_VAL|GPIO_Port|GPIO_PORT_F|5
+ENUM_VAL|GPIO_Port|GPIO_PORT_G|6
+ENUM_VAL|GPIO_Port|GPIO_PORT_COUNT|7
+ENUM|GPIO_PinMask|enum (int)|4|GPIO_PinMask is an enumeration type|GPIO pin numbers within a port. Each port exposes 16 physical pins numbered 0–15.
+ENUM_VAL|GPIO_PinMask|GPIO_PIN_0|GPIO_PIN(0)
+ENUM_VAL|GPIO_PinMask|GPIO_PIN_1|GPIO_PIN(1)
+ENUM_VAL|GPIO_PinMask|GPIO_PIN_2|GPIO_PIN(2)
+ENUM_VAL|GPIO_PinMask|GPIO_PIN_3|GPIO_PIN(3)
+ENUM_VAL|GPIO_PinMask|GPIO_PIN_4|GPIO_PIN(4)
+ENUM_VAL|GPIO_PinMask|GPIO_PIN_5|GPIO_PIN(5)
+ENUM_VAL|GPIO_PinMask|GPIO_PIN_6|GPIO_PIN(6)
+ENUM_VAL|GPIO_PinMask|GPIO_PIN_7|GPIO_PIN(7)
+ENUM_VAL|GPIO_PinMask|GPIO_PIN_8|GPIO_PIN(8)
+ENUM_VAL|GPIO_PinMask|GPIO_PIN_9|GPIO_PIN(9)
+ENUM_VAL|GPIO_PinMask|GPIO_PIN_10|GPIO_PIN(10)
+ENUM_VAL|GPIO_PinMask|GPIO_PIN_11|GPIO_PIN(11)
+ENUM_VAL|GPIO_PinMask|GPIO_PIN_12|GPIO_PIN(12)
+ENUM_VAL|GPIO_PinMask|GPIO_PIN_13|GPIO_PIN(13)
+ENUM_VAL|GPIO_PinMask|GPIO_PIN_14|GPIO_PIN(14)
+ENUM_VAL|GPIO_PinMask|GPIO_PIN_15|GPIO_PIN(15)
+ENUM|GPIO_Mode|enum (int)|4|GPIO_Mode is an enumeration type|GPIO pin operating modes.
+ENUM_VAL|GPIO_Mode|GPIO_MODE_INPUT|0
+ENUM_VAL|GPIO_Mode|GPIO_MODE_OUTPUT_PP|1
+ENUM_VAL|GPIO_Mode|GPIO_MODE_OUTPUT_OD|2
+ENUM_VAL|GPIO_Mode|GPIO_MODE_AF_PP|3
+ENUM_VAL|GPIO_Mode|GPIO_MODE_AF_OD|4
+ENUM_VAL|GPIO_Mode|GPIO_MODE_ANALOG|5
+ENUM_VAL|GPIO_Mode|GPIO_MODE_IT_RISING|6
+ENUM_VAL|GPIO_Mode|GPIO_MODE_IT_FALLING|7
+ENUM_VAL|GPIO_Mode|GPIO_MODE_IT_BOTH|8
+ENUM|GPIO_Pull|enum (int)|4|GPIO_Pull is an enumeration type|Internal pull resistor configuration.
+ENUM_VAL|GPIO_Pull|GPIO_PULL_NONE|0
+ENUM_VAL|GPIO_Pull|GPIO_PULL_UP|1
+ENUM_VAL|GPIO_Pull|GPIO_PULL_DOWN|2
+ENUM|GPIO_Speed|enum (int)|4|GPIO_Speed is an enumeration type|Output drive speed (slew rate) setting. Higher speeds increase EMI; use the lowest speed that meets timing.
+ENUM_VAL|GPIO_Speed|GPIO_SPEED_LOW|0
+ENUM_VAL|GPIO_Speed|GPIO_SPEED_MEDIUM|1
+ENUM_VAL|GPIO_Speed|GPIO_SPEED_HIGH|2
+ENUM_VAL|GPIO_Speed|GPIO_SPEED_VERY_HIGH|3
+ENUM|GPIO_State|enum (int)|4|GPIO_State is an enumeration type|Logical pin state.
+ENUM_VAL|GPIO_State|GPIO_STATE_LOW|0
+ENUM_VAL|GPIO_State|GPIO_STATE_HIGH|1
+ENUM|GPIO_Status|enum (int)|4|GPIO_Status is an enumeration type|Driver return codes.
+ENUM_VAL|GPIO_Status|GPIO_OK|0
+ENUM_VAL|GPIO_Status|GPIO_ERR_PARAM|-1
+ENUM_VAL|GPIO_Status|GPIO_ERR_BUSY|-2
+ENUM_VAL|GPIO_Status|GPIO_ERR_TIMEOUT|-3
+ENUM_VAL|GPIO_Status|GPIO_ERR_HW|-4
+SECTION|Structures
+STRUCT|GPIO_Config|struct GPIO_Config|?|GPIO_Config is a structure type|Full configuration descriptor for a GPIO pin or pin group. Pass a pointer to an initialised instance of this struct to GPIO_Init(). All fields must be set; there are no hidden defaults.
+STRUCT_FIELD|GPIO_Config|port|GPIO_Port|?|0
+STRUCT_FIELD|GPIO_Config|pin|uint16_t|2|0
+STRUCT_FIELD|GPIO_Config|mode|GPIO_Mode|?|0
+STRUCT_FIELD|GPIO_Config|pull|GPIO_Pull|?|0
+STRUCT_FIELD|GPIO_Config|speed|GPIO_Speed|?|0
+STRUCT_FIELD|GPIO_Config|af|uint8_t|1|0
+STRUCT|GPIO_IRQ_Entry|struct GPIO_IRQ_Entry|?|GPIO_IRQ_Entry is a structure type|IRQ registration entry for a single pin. Internal use – populated by GPIO_RegisterIRQ() and stored in the driver's callback table.
+STRUCT_FIELD|GPIO_IRQ_Entry|port|GPIO_Port|?|0
+STRUCT_FIELD|GPIO_IRQ_Entry|pin|uint16_t|2|0
+STRUCT_FIELD|GPIO_IRQ_Entry|callback|GPIO_IRQ_Callback|?|0
+STRUCT_FIELD|GPIO_IRQ_Entry|enabled|bool|1|0
+SECTION|Function Pointer Types
+FUNCPTR|GPIO_IRQ_Callback|void|GPIO_Port port, uint16_t pin, GPIO_State state|8|GPIO_IRQ_Callback is a function pointer: void (*GPIO_IRQ_Callback)(GPIO_Port port, uint16_t pin, GPIO_State state)|Callback invoked from the GPIO EXTI interrupt handler.

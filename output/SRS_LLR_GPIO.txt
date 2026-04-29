@@ -1,0 +1,51 @@
+# SRS_LLR | gpio.c | Generated: 2026-04-29
+# Source file: gpio.c
+#
+# COLUMNS: RecordType | FunctionName | Text | isReq
+#   FUNC_HEADING | name | heading text        | false
+#   FUNC_REQ     | name | requirement text    | true
+#   FUNC_PARAM   | name | parameter req text  | true
+#   FUNC_RETURN  | name | return req text     | true
+#   ASM_HEADING  | name | heading text        | false
+#   ASM_REQ      | name | asm req text        | true
+#   DATA_HEADING | name | heading text        | false
+#   DATA_REQ     | name | data req text       | true
+#
+FUNC_HEADING|gpio_is_valid|Validate a port + pin argument pair.|false
+FUNC_REQ|gpio_is_valid|The gpio_is_valid() function shall validate a port + pin argument pair.|true
+FUNC_RETURN|gpio_is_valid|The gpio_is_valid() function shall return true if both values are in range, false otherwise..|true
+FUNC_HEADING|gpio_find_irq|Find an existing IRQ table entry for the given port and pin.|false
+FUNC_REQ|gpio_find_irq|The gpio_find_irq() function shall find an existing IRQ table entry for the given port and pin.|true
+FUNC_RETURN|gpio_find_irq|The gpio_find_irq() function shall return Pointer to the matching GPIO_IRQ_Entry, or NULL if not found..|true
+FUNC_HEADING|gpio_mode_to_moder|Map a GPIO_Mode value to the 2-bit MODER field encoding.|false
+FUNC_REQ|gpio_mode_to_moder|The gpio_mode_to_moder() function shall map a GPIO_Mode value to the 2-bit MODER field encoding.|true
+FUNC_RETURN|gpio_mode_to_moder|The gpio_mode_to_moder() function shall return 2-bit hardware encoding for the MODER register..|true
+FUNC_HEADING|GPIO_Init|Initialise one or more GPIO pins according to the supplied config. Enables the port clock, configures MODER / OTYPER / OSPEEDR / PUPDR, and for interrupt modes sets up EXTI routing and enables the NVIC line.|false
+FUNC_REQ|GPIO_Init|The GPIO_Init() function shall initialise one or more GPIO pins according to the supplied config. Enables the port clock, configures MODER / OTYPER / OSPEEDR / PUPDR, and for interrupt modes sets up EXTI routing and enables the NVIC line.|true
+FUNC_RETURN|GPIO_Init|The GPIO_Init() function shall return GPIO_OK on success..|true
+FUNC_HEADING|GPIO_DeInit|Reset a pin or pin group to the power-on default. Removes registered IRQ callbacks and disables the EXTI lines for the affected pins. Port clock is left running.|false
+FUNC_REQ|GPIO_DeInit|The GPIO_DeInit() function shall reset a pin or pin group to the power-on default. Removes registered IRQ callbacks and disables the EXTI lines for the affected pins. Port clock is left running.|true
+FUNC_RETURN|GPIO_DeInit|The GPIO_DeInit() function shall return GPIO_OK on success..|true
+FUNC_HEADING|GPIO_Write|Drive an output pin or pin group to the requested state. Uses the atomic BSRR register: the upper half clears bits, the lower half sets them, so no read-modify-write is needed.|false
+FUNC_REQ|GPIO_Write|The GPIO_Write() function shall drive an output pin or pin group to the requested state. Uses the atomic BSRR register: the upper half clears bits, the lower half sets them, so no read-modify-write is needed.|true
+FUNC_RETURN|GPIO_Write|The GPIO_Write() function shall return GPIO_OK on success..|true
+FUNC_HEADING|GPIO_Read|Sample the current logical state of a pin or pin group. Reads the IDR register and returns the subset of bits selected by|false
+FUNC_REQ|GPIO_Read|The GPIO_Read() function shall sample the current logical state of a pin or pin group. Reads the IDR register and returns the subset of bits selected by.|true
+FUNC_RETURN|GPIO_Read|The GPIO_Read() function shall return GPIO_OK on success..|true
+FUNC_HEADING|GPIO_Toggle|Toggle the output state of a pin or pin group. Performs an atomic read-modify-write on the ODR register inside a critical section to prevent race conditions on preemptive targets.|false
+FUNC_REQ|GPIO_Toggle|The GPIO_Toggle() function shall toggle the output state of a pin or pin group. Performs an atomic read-modify-write on the ODR register inside a critical section to prevent race conditions on preemptive targets.|true
+FUNC_RETURN|GPIO_Toggle|The GPIO_Toggle() function shall return GPIO_OK on success..|true
+FUNC_HEADING|GPIO_SetMode|Change the operating mode of an already-initialised pin at runtime. Only the MODER field is updated; pull, speed, and AF settings are preserved.|false
+FUNC_REQ|GPIO_SetMode|The GPIO_SetMode() function shall change the operating mode of an already-initialised pin at runtime. Only the MODER field is updated; pull, speed, and AF settings are preserved.|true
+FUNC_RETURN|GPIO_SetMode|The GPIO_SetMode() function shall return GPIO_OK on success..|true
+FUNC_HEADING|GPIO_RegisterIRQ|Register a callback for a GPIO pin interrupt. The pin must already be configured with a GPIO_MODE_IT_* mode. Re-registering the same port+pin replaces the existing callback.|false
+FUNC_REQ|GPIO_RegisterIRQ|The GPIO_RegisterIRQ() function shall register a callback for a GPIO pin interrupt. The pin must already be configured with a GPIO_MODE_IT_* mode. Re-registering the same port+pin replaces the existing callback.|true
+FUNC_RETURN|GPIO_RegisterIRQ|The GPIO_RegisterIRQ() function shall return GPIO_OK on success..|true
+FUNC_HEADING|GPIO_UnregisterIRQ|Unregister a previously registered interrupt callback. Removes the entry from the callback table by swapping with the last entry. If no entry matches, the function succeeds silently.|false
+FUNC_REQ|GPIO_UnregisterIRQ|The GPIO_UnregisterIRQ() function shall unregister a previously registered interrupt callback. Removes the entry from the callback table by swapping with the last entry. If no entry matches, the function succeeds silently.|true
+FUNC_RETURN|GPIO_UnregisterIRQ|The GPIO_UnregisterIRQ() function shall return GPIO_OK always (no error if not found)..|true
+FUNC_HEADING|GPIO_SetIRQEnabled|Enable or disable the EXTI interrupt line for a configured pin.|false
+FUNC_REQ|GPIO_SetIRQEnabled|The GPIO_SetIRQEnabled() function shall enable or disable the EXTI interrupt line for a configured pin.|true
+FUNC_RETURN|GPIO_SetIRQEnabled|The GPIO_SetIRQEnabled() function shall return GPIO_OK on success..|true
+FUNC_HEADING|GPIO_EXTI_IRQHandler|EXTI ISR dispatcher called by the MCU vector handlers. Applies millisecond debounce filtering, samples the pin, and dispatches to any registered callback. Clears the EXTI pending bit before returning.|false
+FUNC_REQ|GPIO_EXTI_IRQHandler|The GPIO_EXTI_IRQHandler() function shall eXTI ISR dispatcher called by the MCU vector handlers. Applies millisecond debounce filtering, samples the pin, and dispatches to any registered callback. Clears the EXTI pending bit before returning.|true

@@ -1,0 +1,70 @@
+# DD_HEADER | sample.h | Generated: 2026-04-28
+# Source file: sample.h
+#
+# COLUMNS per record type:
+#   SECTION    | Title
+#   DEFINE     | Name|Value|DataType|Size(B)|ObjectText|Description
+#   DEFINE_FUNC| Name|Value|DataType|Size(B)|ObjectText|Description
+#   TYPEDEF    | Name|AliasOf|DataType|Size(B)|ObjectText|Description
+#   ENUM       | Name|DataType|Size(B)|ObjectText|Description
+#   ENUM_VAL   | EnumName|ValName|Value
+#   STRUCT     | Name|DataType|Size(B)|ObjectText|Description
+#   STRUCT_FIELD| StructName|FieldName|DataType|Size(B)|BitWidth
+#   UNION      | Name|DataType|Size(B)|ObjectText|Description
+#   UNION_FIELD| UnionName|FieldName|DataType|Size(B)|BitWidth
+#   FUNCPTR    | Name|ReturnType|Params|Size(B)|ObjectText|Description
+#   INLINE     | Name|ReturnType|Params|Size(B)|ObjectText|Description
+#
+SECTION|Preprocessor Macros
+DEFINE|MAX_SIZE|10|int|4|Macro MAX_SIZE is defined as 10|
+DEFINE|PI|3.14159265358979323846|double|8|Macro PI is defined as 3.14159265358979323846|
+DEFINE_FUNC|SQUARE(x)|((x) * (x))|macro (function-like)|0|Function-like macro SQUARE(x) expands to: ((x) * (x))|Function-like macro
+DEFINE_FUNC|MAX(a, b)|((a) > (b) ? (a) : (b))|macro (function-like)|0|Function-like macro MAX(a, b) expands to: ((a) > (b) ? (a) : (b))|
+DEFINE_FUNC|ABS(x)|((x) < 0 ? -(x) : (x))|macro (function-like)|0|Function-like macro ABS(x) expands to: ((x) < 0 ? -(x) : (x))|
+DEFINE_FUNC|STRINGIFY(x)|#x|macro (function-like)|0|Function-like macro STRINGIFY(x) expands to: #x|Stringification
+DEFINE_FUNC|TO_STR(x)|STRINGIFY(x)|macro (function-like)|0|Function-like macro TO_STR(x) expands to: STRINGIFY(x)|
+DEFINE_FUNC|CONCAT(a, b)|a##b|macro (function-like)|0|Function-like macro CONCAT(a, b) expands to: a##b|Token pasting
+DEFINE_FUNC|MAKE_VAR(n)|var_##n|macro (function-like)|0|Function-like macro MAKE_VAR(n) expands to: var_##n|
+DEFINE_FUNC|LOG(msg)|printf(              msg     , __FILE__, __LINE__, __func__)|macro (function-like)|0|Function-like macro LOG(msg) expands to: printf(              msg     , __FILE__, __LINE__, __func__)|Predefined macros usage wrapper
+DEFINE_FUNC|LOGF(fmt, ...)|printf(           fmt     , __FILE__, __LINE__, ##__VA_ARGS__)|macro (function-like)|0|Function-like macro LOGF(fmt, ...) expands to: printf(           fmt     , __FILE__, __LINE__, ##__VA_ARGS__)|Variadic macro
+SECTION|Type Definitions
+TYPEDEF|uint|unsigned int|unsigned int|4|uint is a typedef alias for unsigned int|Typedefs - primitive aliases
+TYPEDEF|f32|float|float|4|f32 is a typedef alias for float|
+TYPEDEF|f64|double|double|8|f64 is a typedef alias for double|
+TYPEDEF|u8|unsigned char|unsigned char|1|u8 is a typedef alias for unsigned char|
+TYPEDEF|s8|signed char|signed char|1|s8 is a typedef alias for signed char|
+TYPEDEF|u16|uint16_t|uint16_t|2|u16 is a typedef alias for uint16_t|
+TYPEDEF|s32|int32_t|int32_t|4|s32 is a typedef alias for int32_t|
+SECTION|Enumerations
+ENUM|SystemState|enum (int)|4|SystemState is an enumeration type|Enum
+ENUM_VAL|SystemState|STATE_IDLE|0
+ENUM_VAL|SystemState|STATE_RUNNING|1
+ENUM_VAL|SystemState|STATE_ERROR|2
+ENUM_VAL|SystemState|STATE_DONE|3
+ENUM|Color|enum (int)|4|Color is an enumeration type|
+ENUM_VAL|Color|RED|0
+ENUM_VAL|Color|GREEN|1
+ENUM_VAL|Color|BLUE|2
+SECTION|Structures
+STRUCT|Sensor|struct Sensor|38|Sensor is a structure type|Struct — plain, with bit fields, with flexible array member
+STRUCT_FIELD|Sensor|id|uint8_t|1|0
+STRUCT_FIELD|Sensor|name|char[32]|32|0
+STRUCT_FIELD|Sensor|value|f32|4|0
+STRUCT_FIELD|Sensor|is_active|bool|1|0
+STRUCT|StatusReg|struct StatusReg|4|StatusReg is a structure type|Bit fields
+STRUCT_FIELD|StatusReg|power|uint8_t|1|1
+STRUCT_FIELD|StatusReg|mode|uint8_t|1|2
+STRUCT_FIELD|StatusReg|error|uint8_t|1|1
+STRUCT_FIELD|StatusReg|reserved|uint8_t|1|4
+STRUCT|FlexArray|struct FlexArray|4|FlexArray is a structure type|Flexible array member (C99)
+STRUCT_FIELD|FlexArray|length|uint32_t|4|0
+STRUCT|Node|struct Node|4|Node is a structure type|Linked list node
+STRUCT_FIELD|Node|data|int|4|0
+SECTION|Unions
+UNION|Register|union Register|4|Register is a union type|Union — named and anonymous
+UNION_FIELD|Register|raw|uint32_t|4|0
+SECTION|Function Pointer Types
+FUNCPTR|Callback|void|SystemState state|8|Callback is a function pointer: void (*Callback)(SystemState state)|Function pointer typedefs
+FUNCPTR|Comparator|int|const void *, const void *|8|Comparator is a function pointer: int (*Comparator)(const void *, const void *)|
+SECTION|Inline Functions
+INLINE|clamp|int|int val, int lo, int hi|4|static inline int clamp(int val, int lo, int hi)|inline function (C99)

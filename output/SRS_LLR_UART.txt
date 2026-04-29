@@ -1,0 +1,57 @@
+# SRS_LLR | uart.c | Generated: 2026-04-29
+# Source file: uart.c
+#
+# COLUMNS: RecordType | FunctionName | Text | isReq
+#   FUNC_HEADING | name | heading text        | false
+#   FUNC_REQ     | name | requirement text    | true
+#   FUNC_PARAM   | name | parameter req text  | true
+#   FUNC_RETURN  | name | return req text     | true
+#   ASM_HEADING  | name | heading text        | false
+#   ASM_REQ      | name | asm req text        | true
+#   DATA_HEADING | name | heading text        | false
+#   DATA_REQ     | name | data req text       | true
+#
+FUNC_HEADING|uart_handle_valid|Validate a handle pointer and confirm it was initialised.|false
+FUNC_REQ|uart_handle_valid|The uart_handle_valid() function shall validate a handle pointer and confirm it was initialised.|true
+FUNC_RETURN|uart_handle_valid|The uart_handle_valid() function shall return true if the handle is usable, false otherwise..|true
+FUNC_HEADING|uart_tx_push|Push one byte into the TX ring-buffer.|false
+FUNC_REQ|uart_tx_push|The uart_tx_push() function shall push one byte into the TX ring-buffer.|true
+FUNC_RETURN|uart_tx_push|The uart_tx_push() function shall return true if the byte was enqueued, false if the buffer is full..|true
+FUNC_HEADING|uart_tx_pop|Pop one byte from the TX ring-buffer.|false
+FUNC_REQ|uart_tx_pop|The uart_tx_pop() function shall pop one byte from the TX ring-buffer.|true
+FUNC_RETURN|uart_tx_pop|The uart_tx_pop() function shall return true if a byte was available, false if the buffer is empty..|true
+FUNC_HEADING|uart_rx_push|Push one byte into the RX ring-buffer.|false
+FUNC_REQ|uart_rx_push|The uart_rx_push() function shall push one byte into the RX ring-buffer.|true
+FUNC_RETURN|uart_rx_push|The uart_rx_push() function shall return true if stored successfully, false if the buffer is full (overrun)..|true
+FUNC_HEADING|uart_rx_pop|Pop one byte from the RX ring-buffer.|false
+FUNC_REQ|uart_rx_pop|The uart_rx_pop() function shall pop one byte from the RX ring-buffer.|true
+FUNC_RETURN|uart_rx_pop|The uart_rx_pop() function shall return true if a byte was available, false if the buffer is empty..|true
+FUNC_HEADING|UART_Init|Initialise a UART peripheral and its associated handle. Enables the peripheral clock, configures baud rate, frame format, and flow control. Registers callbacks from|false
+FUNC_REQ|UART_Init|The UART_Init() function shall initialise a UART peripheral and its associated handle. Enables the peripheral clock, configures baud rate, frame format, and flow control. Registers callbacks from.|true
+FUNC_RETURN|UART_Init|The UART_Init() function shall return UART_OK on success..|true
+FUNC_HEADING|UART_DeInit|Disable the UART peripheral and release resources. Waits for any active TX to drain, then turns off the peripheral clock and zeroes the handle.|false
+FUNC_REQ|UART_DeInit|The UART_DeInit() function shall disable the UART peripheral and release resources. Waits for any active TX to drain, then turns off the peripheral clock and zeroes the handle.|true
+FUNC_RETURN|UART_DeInit|The UART_DeInit() function shall return UART_OK on success..|true
+FUNC_HEADING|UART_Transmit|Transmit|false
+FUNC_REQ|UART_Transmit|The UART_Transmit() function shall transmit.|true
+FUNC_RETURN|UART_Transmit|The UART_Transmit() function shall return UART_OK on success..|true
+FUNC_HEADING|UART_Receive|Receive up to|false
+FUNC_REQ|UART_Receive|The UART_Receive() function shall receive up to.|true
+FUNC_RETURN|UART_Receive|The UART_Receive() function shall return UART_OK on success..|true
+FUNC_HEADING|UART_TransmitIT|Start a non-blocking interrupt-driven transmit. Copies|false
+FUNC_REQ|UART_TransmitIT|The UART_TransmitIT() function shall start a non-blocking interrupt-driven transmit. Copies.|true
+FUNC_RETURN|UART_TransmitIT|The UART_TransmitIT() function shall return UART_OK on success..|true
+FUNC_HEADING|UART_ReceiveIT|Start a non-blocking interrupt-driven receive. Registers|false
+FUNC_REQ|UART_ReceiveIT|The UART_ReceiveIT() function shall start a non-blocking interrupt-driven receive. Registers.|true
+FUNC_RETURN|UART_ReceiveIT|The UART_ReceiveIT() function shall return UART_OK on success..|true
+FUNC_HEADING|UART_GetStatus|Query the current status flags.|false
+FUNC_REQ|UART_GetStatus|The UART_GetStatus() function shall query the current status flags.|true
+FUNC_RETURN|UART_GetStatus|The UART_GetStatus() function shall return UART_OK on success..|true
+FUNC_HEADING|UART_FlushRx|Flush the software and hardware RX buffers. Resets ring-buffer indices and clears error status flags. Ongoing DMA transfers are not affected.|false
+FUNC_REQ|UART_FlushRx|The UART_FlushRx() function shall flush the software and hardware RX buffers. Resets ring-buffer indices and clears error status flags. Ongoing DMA transfers are not affected.|true
+FUNC_RETURN|UART_FlushRx|The UART_FlushRx() function shall return UART_OK on success..|true
+FUNC_HEADING|UART_RxAvailable|Return the number of bytes waiting in the RX ring-buffer.|false
+FUNC_REQ|UART_RxAvailable|The UART_RxAvailable() function shall return the number of bytes waiting in the RX ring-buffer.|true
+FUNC_RETURN|UART_RxAvailable|The UART_RxAvailable() function shall return Byte count available for immediate reading (0 if handle is NULL)..|true
+FUNC_HEADING|UART_IRQHandler|USART ISR handler — call from the MCU vector. Processes TXE, TC, RXNE, and error flags. Feeds bytes from the TX ring-buffer or stores incoming bytes into the RX ring-buffer and dispatches registered callbacks.|false
+FUNC_REQ|UART_IRQHandler|The UART_IRQHandler() function shall uSART ISR handler — call from the MCU vector. Processes TXE, TC, RXNE, and error flags. Feeds bytes from the TX ring-buffer or stores incoming bytes into the RX ring-buffer and dispatches registered callbacks.|true

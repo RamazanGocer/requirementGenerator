@@ -1,0 +1,51 @@
+# SRS_LLR | spi.c | Generated: 2026-04-29
+# Source file: spi.c
+#
+# COLUMNS: RecordType | FunctionName | Text | isReq
+#   FUNC_HEADING | name | heading text        | false
+#   FUNC_REQ     | name | requirement text    | true
+#   FUNC_PARAM   | name | parameter req text  | true
+#   FUNC_RETURN  | name | return req text     | true
+#   ASM_HEADING  | name | heading text        | false
+#   ASM_REQ      | name | asm req text        | true
+#   DATA_HEADING | name | heading text        | false
+#   DATA_REQ     | name | data req text       | true
+#
+FUNC_HEADING|spi_handle_valid|Validate a handle pointer and confirm initialisation.|false
+FUNC_REQ|spi_handle_valid|The spi_handle_valid() function shall validate a handle pointer and confirm initialisation.|true
+FUNC_RETURN|spi_handle_valid|The spi_handle_valid() function shall return true if usable, false otherwise..|true
+FUNC_HEADING|spi_select_prescaler|Select the baud-rate prescaler that achieves the highest clock frequency that does not exceed|false
+FUNC_REQ|spi_select_prescaler|The spi_select_prescaler() function shall select the baud-rate prescaler that achieves the highest clock frequency that does not exceed.|true
+FUNC_RETURN|spi_select_prescaler|The spi_select_prescaler() function shall return 3-bit BR field value (0 /2 … 7 /256), or 7 if no prescaler fits..|true
+FUNC_HEADING|spi_wait_not_busy|Block until the BSY flag clears or|false
+FUNC_REQ|spi_wait_not_busy|The spi_wait_not_busy() function shall block until the BSY flag clears or.|true
+FUNC_RETURN|spi_wait_not_busy|The spi_wait_not_busy() function shall return true if BSY cleared in time, false on timeout..|true
+FUNC_HEADING|SPI_Init|Initialise an SPI peripheral and populate a runtime handle. Enables the peripheral clock, selects the baud-rate prescaler, applies CPOL/CPHA/data-size/bit-order/NSS settings, and optionally configures the CRC polynomial.|false
+FUNC_REQ|SPI_Init|The SPI_Init() function shall initialise an SPI peripheral and populate a runtime handle. Enables the peripheral clock, selects the baud-rate prescaler, applies CPOL/CPHA/data-size/bit-order/NSS settings, and optionally configures the CRC polynomial.|true
+FUNC_RETURN|SPI_Init|The SPI_Init() function shall return SPI_OK on success..|true
+FUNC_HEADING|SPI_DeInit|Disable the SPI peripheral and invalidate the handle. Waits for any active transfer to drain before disabling the clock.|false
+FUNC_REQ|SPI_DeInit|The SPI_DeInit() function shall disable the SPI peripheral and invalidate the handle. Waits for any active transfer to drain before disabling the clock.|true
+FUNC_RETURN|SPI_DeInit|The SPI_DeInit() function shall return SPI_OK on success..|true
+FUNC_HEADING|SPI_Transmit|Transmit|false
+FUNC_REQ|SPI_Transmit|The SPI_Transmit() function shall transmit.|true
+FUNC_RETURN|SPI_Transmit|The SPI_Transmit() function shall return SPI_OK on success..|true
+FUNC_HEADING|SPI_Receive|Receive|false
+FUNC_REQ|SPI_Receive|The SPI_Receive() function shall receive.|true
+FUNC_RETURN|SPI_Receive|The SPI_Receive() function shall return SPI_OK on success..|true
+FUNC_HEADING|SPI_TransmitReceive|Perform a full-duplex blocking transmit and receive. Simultaneously sends|false
+FUNC_REQ|SPI_TransmitReceive|The SPI_TransmitReceive() function shall perform a full-duplex blocking transmit and receive. Simultaneously sends.|true
+FUNC_RETURN|SPI_TransmitReceive|The SPI_TransmitReceive() function shall return SPI_OK on success..|true
+FUNC_HEADING|SPI_TransferIT|Start a non-blocking interrupt-driven full-duplex transfer. Enables TXE and RXNE interrupts. The SPI_TransferCallback fires when the last frame has been exchanged.|false
+FUNC_REQ|SPI_TransferIT|The SPI_TransferIT() function shall start a non-blocking interrupt-driven full-duplex transfer. Enables TXE and RXNE interrupts. The SPI_TransferCallback fires when the last frame has been exchanged.|true
+FUNC_RETURN|SPI_TransferIT|The SPI_TransferIT() function shall return SPI_OK on success..|true
+FUNC_HEADING|SPI_AbortTransfer|Abort an in-progress non-blocking transfer. Disables SPI interrupts, clears status flags, and resets the peripheral state. No callback is fired.|false
+FUNC_REQ|SPI_AbortTransfer|The SPI_AbortTransfer() function shall abort an in-progress non-blocking transfer. Disables SPI interrupts, clears status flags, and resets the peripheral state. No callback is fired.|true
+FUNC_RETURN|SPI_AbortTransfer|The SPI_AbortTransfer() function shall return SPI_OK on success..|true
+FUNC_HEADING|SPI_GetStatus|Return the current peripheral status flags.|false
+FUNC_REQ|SPI_GetStatus|The SPI_GetStatus() function shall return the current peripheral status flags.|true
+FUNC_RETURN|SPI_GetStatus|The SPI_GetStatus() function shall return SPI_OK on success..|true
+FUNC_HEADING|SPI_GetActualClock|Return the actual SCK frequency achieved after prescaler rounding.|false
+FUNC_REQ|SPI_GetActualClock|The SPI_GetActualClock() function shall return the actual SCK frequency achieved after prescaler rounding.|true
+FUNC_RETURN|SPI_GetActualClock|The SPI_GetActualClock() function shall return Actual clock in Hz, or 0 if the handle is not initialised..|true
+FUNC_HEADING|SPI_IRQHandler|SPI interrupt service routine — call from the MCU vector. Handles TXE (feeds next TX byte), RXNE (stores received byte), and error flags (OVR, MODF, CRCERR). Fires the transfer callback when the frame count reaches zero.|false
+FUNC_REQ|SPI_IRQHandler|The SPI_IRQHandler() function shall sPI interrupt service routine — call from the MCU vector. Handles TXE (feeds next TX byte), RXNE (stores received byte), and error flags (OVR, MODF, CRCERR). Fires the transfer callback when the frame count reaches zero.|true

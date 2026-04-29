@@ -1,0 +1,123 @@
+/*
+ * srs_llr_import.dxl
+ * IBM DOORS DXL import script for SRS_LLR modules.
+ *
+ * Usage:
+ *   1. Open the target SRS_LLR module in DOORS.
+ *   2. Edit the FILE_PATH constant below.
+ *   3. Run via: Tools > Edit DXL... (paste & run) OR Tools > Run DXL File...
+ *
+ * Generated record types handled:
+ *   FUNC_HEADING / ASM_HEADING / DATA_HEADING
+ *       -> Object Heading  (isReq = false)
+ *   FUNC_REQ / FUNC_PARAM / FUNC_RETURN
+ *   ASM_REQ / DATA_REQ
+ *       -> Object Text  (isReq = true)
+ *
+ * DOORS module attributes expected:
+ *   "Object Heading" (string)
+ *   "Object Text"    (string)
+ *   "isReq"          (bool)
+ */
+
+pragma runLim, 0   // no timeout for large files
+
+// =============================================================================
+// CONFIGURATION — edit this path before running
+// =============================================================================
+const string FILE_PATH = "C:/Development/pyCharmProjects/requirementGenerator/output/sample_SRS_LLR.txt"
+// =============================================================================
+
+// ---------------------------------------------------------------------------
+// Helper: extract the Nth pipe-delimited field from line (0-based index).
+// ---------------------------------------------------------------------------
+string getField(string line, int n) {
+    int PIPE     = 124   // ASCII '|'
+    int fieldIdx = 0
+    int start    = 0
+    int i        = 0
+    int len      = length(line)
+
+    while (i <= len) {
+        bool atDelim = (i < len) && (line[i] == PIPE)
+        bool atEnd   = (i == len)
+
+        if (atDelim || atEnd) {
+            if (fieldIdx == n) {
+                if (i > start) {
+                    return line[start, i - 1]
+                }
+                return ""
+            }
+            fieldIdx++
+            start = i + 1
+        }
+        i++
+    }
+    return ""
+}
+
+// ---------------------------------------------------------------------------
+// Main import logic
+// ---------------------------------------------------------------------------
+Module m = current Module
+if (null m) {
+    ack "ERROR: No module is open. Open the target SRS_LLR module first."
+    halt
+}
+
+Stream s = fileOpen(FILE_PATH, "r")
+if (null s) {
+    ack "ERROR: Cannot open file:\n" FILE_PATH
+    halt
+}
+
+string line        = ""
+int    lineCount   = 0
+int    headings    = 0
+int    requirements = 0
+
+while (getLine(s, line)) {
+    lineCount++
+
+    // Skip blank lines and comment lines
+    if (length(line) == 0) continue
+    if (line[0] == 35)     continue   // '#' = ASCII 35
+
+    string rtype  = getField(line, 0)
+    string fname  = getField(line, 1)
+    string text   = getField(line, 2)
+    string isReqS = getField(line, 3)
+
+    // ------------------------------------------------------------------
+    // Heading records  (FUNC_HEADING, ASM_HEADING, DATA_HEADING)
+    // ------------------------------------------------------------------
+    if (rtype == "FUNC_HEADING" || rtype == "ASM_HEADING" || rtype == "DATA_HEADING") {
+        Object o = create(m)
+        // Format: "FunctionName - Description"
+        o."Object Heading" = fname " - " text
+        o."isReq"          = false
+        headings++
+    }
+
+    // ------------------------------------------------------------------
+    // Requirement / detail records
+    // ------------------------------------------------------------------
+    else if (rtype == "FUNC_REQ"    || rtype == "FUNC_PARAM" ||
+             rtype == "FUNC_RETURN" || rtype == "ASM_REQ"    ||
+             rtype == "DATA_REQ") {
+        Object o  = create(m)
+        o."Object Text" = text
+        o."isReq"       = (isReqS == "true")
+        requirements++
+    }
+    // Unknown record types silently skipped
+}
+
+close(s)
+
+print "SRS_LLR import complete.\n"
+print "  Lines read    : " lineCount "\n"
+print "  Headings      : " headings "\n"
+print "  Requirements  : " requirements "\n"
+print "  Total objects : " (headings + requirements) "\n"

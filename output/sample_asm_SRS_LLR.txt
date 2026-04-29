@@ -1,0 +1,129 @@
+# SRS_LLR | sample_asm.s | Generated: 2026-04-28
+# Source file: sample_asm.s
+#
+# COLUMNS: RecordType | FunctionName | Text | isReq
+#   FUNC_HEADING | name | heading text        | false
+#   FUNC_REQ     | name | requirement text    | true
+#   FUNC_PARAM   | name | parameter req text  | true
+#   FUNC_RETURN  | name | return req text     | true
+#   ASM_HEADING  | name | heading text        | false
+#   ASM_REQ      | name | asm req text        | true
+#   DATA_HEADING | name | heading text        | false
+#   DATA_REQ     | name | data req text       | true
+#
+ASM_HEADING|add_integers|Add integers|false
+ASM_REQ|add_integers|The add_integers() function shall add integers.|true
+FUNC_RETURN|add_integers|The add_integers() function shall return a value of type int.|true
+ASM_REQ|add_integers|The add_integers() function shall perform integer addition.|true
+ASM_HEADING|sub_integers|Sub integers|false
+ASM_REQ|sub_integers|The sub_integers() function shall sub integers.|true
+FUNC_RETURN|sub_integers|The sub_integers() function shall return a value of type int.|true
+ASM_REQ|sub_integers|The sub_integers() function shall perform integer subtraction.|true
+ASM_HEADING|mul_integers|Mul integers|false
+ASM_REQ|mul_integers|The mul_integers() function shall mul integers.|true
+FUNC_RETURN|mul_integers|The mul_integers() function shall return a value of type int.|true
+ASM_REQ|mul_integers|The mul_integers() function shall perform signed integer multiplication.|true
+ASM_HEADING|div_integers|Uses idiv: rdx:rax / rsi|false
+ASM_REQ|div_integers|The div_integers() function shall uses idiv: rdx:rax / rsi.|true
+FUNC_RETURN|div_integers|The div_integers() function shall return a value of type int.|true
+ASM_REQ|div_integers|The div_integers() function shall sign-extend EAX into EDX:EAX for division.|true
+ASM_REQ|div_integers|The div_integers() function shall perform signed integer division.|true
+ASM_HEADING|mod_integers|Mod integers|false
+ASM_REQ|mod_integers|The mod_integers() function shall mod integers.|true
+FUNC_RETURN|mod_integers|The mod_integers() function shall return a value of type int.|true
+ASM_REQ|mod_integers|The mod_integers() function shall sign-extend EAX into EDX:EAX for division.|true
+ASM_REQ|mod_integers|The mod_integers() function shall perform signed integer division.|true
+ASM_HEADING|bitwise_and|Bitwise and|false
+ASM_REQ|bitwise_and|The bitwise_and() function shall bitwise and.|true
+FUNC_RETURN|bitwise_and|The bitwise_and() function shall return a value of type int.|true
+ASM_REQ|bitwise_and|The bitwise_and() function shall perform bitwise AND.|true
+ASM_HEADING|bitwise_or|Bitwise or|false
+ASM_REQ|bitwise_or|The bitwise_or() function shall bitwise or.|true
+FUNC_RETURN|bitwise_or|The bitwise_or() function shall return a value of type int.|true
+ASM_REQ|bitwise_or|The bitwise_or() function shall perform bitwise OR.|true
+ASM_HEADING|bitwise_xor|Bitwise xor|false
+ASM_REQ|bitwise_xor|The bitwise_xor() function shall bitwise xor.|true
+FUNC_RETURN|bitwise_xor|The bitwise_xor() function shall return a value of type int.|true
+ASM_REQ|bitwise_xor|The bitwise_xor() function shall perform bitwise XOR.|true
+ASM_HEADING|bitwise_not|Bitwise not|false
+ASM_REQ|bitwise_not|The bitwise_not() function shall bitwise not.|true
+FUNC_RETURN|bitwise_not|The bitwise_not() function shall return a value of type int.|true
+ASM_REQ|bitwise_not|The bitwise_not() function shall perform bitwise NOT (one's complement).|true
+ASM_HEADING|shift_left|Shift left|false
+ASM_REQ|shift_left|The shift_left() function shall shift left.|true
+FUNC_RETURN|shift_left|The shift_left() function shall return a value of type int.|true
+ASM_REQ|shift_left|The shift_left() function shall perform logical shift left.|true
+ASM_HEADING|shift_right|Shift right|false
+ASM_REQ|shift_right|The shift_right() function shall shift right.|true
+FUNC_RETURN|shift_right|The shift_right() function shall return a value of type int.|true
+ASM_REQ|shift_right|The shift_right() function shall perform logical shift right.|true
+ASM_HEADING|arith_shift_right|Arith shift right|false
+ASM_REQ|arith_shift_right|The arith_shift_right() function shall arith shift right.|true
+FUNC_RETURN|arith_shift_right|The arith_shift_right() function shall return a value of type int.|true
+ASM_REQ|arith_shift_right|The arith_shift_right() function shall perform arithmetic shift right.|true
+ASM_HEADING|rotate_left|Rotate left|false
+ASM_REQ|rotate_left|The rotate_left() function shall rotate left.|true
+FUNC_RETURN|rotate_left|The rotate_left() function shall return a value of type int.|true
+ASM_REQ|rotate_left|The rotate_left() function shall perform rotate left.|true
+ASM_HEADING|rotate_right|Rotate right|false
+ASM_REQ|rotate_right|The rotate_right() function shall rotate right.|true
+FUNC_RETURN|rotate_right|The rotate_right() function shall return a value of type int.|true
+ASM_REQ|rotate_right|The rotate_right() function shall perform rotate right.|true
+ASM_HEADING|compare_and_return|Returns:  1 if a > b,  -1 if a < b,  0 if equal|false
+ASM_REQ|compare_and_return|The compare_and_return() function shall returns:  1 if a > b,  -1 if a < b,  0 if equal.|true
+FUNC_RETURN|compare_and_return|The compare_and_return() function shall return a value of type int.|true
+ASM_REQ|compare_and_return|The compare_and_return() function shall compare two values and set flags.|true
+ASM_REQ|compare_and_return|The compare_and_return() function shall branch if greater (signed).|true
+ASM_REQ|compare_and_return|The compare_and_return() function shall branch if less (signed).|true
+ASM_REQ|compare_and_return|The compare_and_return() function shall perform bitwise XOR.|true
+ASM_HEADING|asm_abs|Abs|false
+ASM_REQ|asm_abs|The asm_abs() function shall abs.|true
+FUNC_RETURN|asm_abs|The asm_abs() function shall return a value of type int.|true
+ASM_REQ|asm_abs|The asm_abs() function shall sign-extend EAX into EDX:EAX for division.|true
+ASM_REQ|asm_abs|The asm_abs() function shall perform bitwise XOR.|true
+ASM_REQ|asm_abs|The asm_abs() function shall perform integer subtraction.|true
+ASM_HEADING|asm_max|Max|false
+ASM_REQ|asm_max|The asm_max() function shall max.|true
+FUNC_RETURN|asm_max|The asm_max() function shall return a value of type int.|true
+ASM_REQ|asm_max|The asm_max() function shall compare two values and set flags.|true
+ASM_REQ|asm_max|The asm_max() function shall conditionally move if less (branchless select).|true
+ASM_HEADING|asm_min|Min|false
+ASM_REQ|asm_min|The asm_min() function shall min.|true
+FUNC_RETURN|asm_min|The asm_min() function shall return a value of type int.|true
+ASM_REQ|asm_min|The asm_min() function shall compare two values and set flags.|true
+ASM_REQ|asm_min|The asm_min() function shall conditionally move if greater (branchless select).|true
+ASM_HEADING|asm_loop_sum|Loop sum|false
+ASM_REQ|asm_loop_sum|The asm_loop_sum() function shall loop sum.|true
+FUNC_RETURN|asm_loop_sum|The asm_loop_sum() function shall return a value of type int.|true
+ASM_REQ|asm_loop_sum|The asm_loop_sum() function shall perform bitwise XOR.|true
+ASM_REQ|asm_loop_sum|The asm_loop_sum() function shall compare two values and set flags.|true
+ASM_REQ|asm_loop_sum|The asm_loop_sum() function shall branch if greater or equal.|true
+ASM_REQ|asm_loop_sum|The asm_loop_sum() function shall perform integer addition.|true
+ASM_REQ|asm_loop_sum|The asm_loop_sum() function shall increment by 1.|true
+ASM_REQ|asm_loop_sum|The asm_loop_sum() function shall unconditional branch.|true
+ASM_HEADING|asm_swap|Swap|false
+ASM_REQ|asm_swap|The asm_swap() function shall swap.|true
+FUNC_RETURN|asm_swap|The asm_swap() function shall return a value of type int.|true
+ASM_REQ|asm_swap|The asm_swap() function shall perform bitwise XOR.|true
+ASM_HEADING|asm_factorial|Factorial|false
+ASM_REQ|asm_factorial|The asm_factorial() function shall factorial.|true
+FUNC_RETURN|asm_factorial|The asm_factorial() function shall return a value of type int.|true
+ASM_REQ|asm_factorial|The asm_factorial() function shall compare two values and set flags.|true
+ASM_REQ|asm_factorial|The asm_factorial() function shall branch if less or equal.|true
+ASM_REQ|asm_factorial|The asm_factorial() function shall perform signed integer multiplication.|true
+ASM_REQ|asm_factorial|The asm_factorial() function shall decrement by 1.|true
+ASM_REQ|asm_factorial|The asm_factorial() function shall unconditional branch.|true
+ASM_HEADING|asm_memset|Memset|false
+ASM_REQ|asm_memset|The asm_memset() function shall memset.|true
+FUNC_RETURN|asm_memset|The asm_memset() function shall return a value of type int.|true
+ASM_REQ|asm_memset|The asm_memset() function shall repeat a string instruction.|true
+ASM_HEADING|asm_global_var|Global var|false
+ASM_REQ|asm_global_var|The asm_global_var() function shall global var.|true
+FUNC_RETURN|asm_global_var|The asm_global_var() function shall return a value of type int.|true
+ASM_HEADING|asm_buffer|Buffer|false
+ASM_REQ|asm_buffer|The asm_buffer() function shall buffer.|true
+FUNC_RETURN|asm_buffer|The asm_buffer() function shall return a value of type int.|true
+DATA_HEADING|asm_global_var|Assembly global variable: asm_global_var|false
+DATA_REQ|asm_global_var|The asm_global_var variable shall be a uint32_t of size 4 byte(s), initialized to 0xCAFEBABE      /* 32-bit initialized data */.|true
+DATA_HEADING|asm_buffer|Assembly global variable: asm_buffer|false
+DATA_REQ|asm_buffer|The asm_buffer variable shall be a uint8_t[] of size ? byte(s), initialized to 64              /* 64 bytes, zero-initialized */.|true

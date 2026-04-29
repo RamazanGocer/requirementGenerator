@@ -1,0 +1,81 @@
+# SRS_LLR | sample.c | Generated: 2026-04-28
+# Source file: sample.c
+#
+# COLUMNS: RecordType | FunctionName | Text | isReq
+#   FUNC_HEADING | name | heading text        | false
+#   FUNC_REQ     | name | requirement text    | true
+#   FUNC_PARAM   | name | parameter req text  | true
+#   FUNC_RETURN  | name | return req text     | true
+#   ASM_HEADING  | name | heading text        | false
+#   ASM_REQ      | name | asm req text        | true
+#   DATA_HEADING | name | heading text        | false
+#   DATA_REQ     | name | data req text       | true
+#
+FUNC_HEADING|system_init|system_init — local variable types & qualifiers|false
+FUNC_REQ|system_init|The system_init() function shall system_init — local variable types & qualifiers.|true
+FUNC_HEADING|system_get_state|State machine — getter/setter|false
+FUNC_REQ|system_get_state|The system_get_state() function shall state machine — getter/setter.|true
+FUNC_RETURN|system_get_state|The system_get_state() function shall return a value of type SystemState.|true
+FUNC_HEADING|system_set_state|System set state|false
+FUNC_REQ|system_set_state|The system_set_state() function shall system set state.|true
+FUNC_HEADING|sensor_read|Pointer to struct|false
+FUNC_REQ|sensor_read|The sensor_read() function shall pointer to struct.|true
+FUNC_RETURN|sensor_read|The sensor_read() function shall return a value of type bool.|true
+FUNC_HEADING|calculate_area|Macro: SQUARE, PI|false
+FUNC_REQ|calculate_area|The calculate_area() function shall macro: SQUARE, PI.|true
+FUNC_RETURN|calculate_area|The calculate_area() function shall return a value of type f32.|true
+FUNC_HEADING|array_sum|restrict pointer + pointer arithmetic|false
+FUNC_REQ|array_sum|The array_sum() function shall restrict pointer + pointer arithmetic.|true
+FUNC_RETURN|array_sum|The array_sum() function shall return a value of type int.|true
+FUNC_HEADING|swap|Pointer swap|false
+FUNC_REQ|swap|The swap() function shall pointer swap.|true
+FUNC_HEADING|matrix_fill|Multi-dimensional array (VLA style, C99)|false
+FUNC_REQ|matrix_fill|The matrix_fill() function shall multi-dimensional array (VLA style, C99).|true
+FUNC_HEADING|str_duplicate|Double pointer|false
+FUNC_REQ|str_duplicate|The str_duplicate() function shall double pointer.|true
+FUNC_HEADING|generic_print|void * generic pointer|false
+FUNC_REQ|generic_print|The generic_print() function shall void * generic pointer.|true
+FUNC_HEADING|list_push|Linked list|false
+FUNC_REQ|list_push|The list_push() function shall linked list.|true
+FUNC_RETURN|list_push|The list_push() function shall return a value of type Node *.|true
+FUNC_HEADING|list_free|List free|false
+FUNC_REQ|list_free|The list_free() function shall list free.|true
+FUNC_HEADING|flex_array_create|Flexible array member|false
+FUNC_REQ|flex_array_create|The flex_array_create() function shall flexible array member.|true
+FUNC_RETURN|flex_array_create|The flex_array_create() function shall return a value of type FlexArray *.|true
+FUNC_HEADING|register_callback|Callback registration|false
+FUNC_REQ|register_callback|The register_callback() function shall callback registration.|true
+FUNC_HEADING|int_comparator|Int comparator|false
+FUNC_REQ|int_comparator|The int_comparator() function shall int comparator.|true
+FUNC_RETURN|int_comparator|The int_comparator() function shall return a value of type int.|true
+FUNC_HEADING|factorial|Recursion|false
+FUNC_REQ|factorial|The factorial() function shall recursion.|true
+FUNC_RETURN|factorial|The factorial() function shall return a value of type int.|true
+FUNC_HEADING|fibonacci|Fibonacci|false
+FUNC_REQ|fibonacci|The fibonacci() function shall fibonacci.|true
+FUNC_RETURN|fibonacci|The fibonacci() function shall return a value of type int.|true
+FUNC_HEADING|sum_variadic|Variadic function|false
+FUNC_REQ|sum_variadic|The sum_variadic() function shall variadic function.|true
+FUNC_RETURN|sum_variadic|The sum_variadic() function shall return a value of type int.|true
+FUNC_HEADING|log_message|Log message|false
+FUNC_REQ|log_message|The log_message() function shall log message.|true
+FUNC_HEADING|fatal_error|Fatal error|false
+FUNC_REQ|fatal_error|The fatal_error() function shall fatal error.|true
+FUNC_RETURN|fatal_error|The fatal_error() function shall return a value of type _Noreturn void.|true
+FUNC_HEADING|setjmp_demo|Setjmp demo|false
+FUNC_REQ|setjmp_demo|The setjmp_demo() function shall setjmp demo.|true
+FUNC_HEADING|file_io_demo|File I/O|false
+FUNC_REQ|file_io_demo|The file_io_demo() function shall file I/O.|true
+ASM_HEADING|asm_demo|Inline assembly (GCC / MinGW — x86-64)|false
+ASM_REQ|asm_demo|The asm_demo() function shall inline assembly (GCC / MinGW — x86-64).|true
+ASM_REQ|asm_demo|The asm_demo() function shall execute a no-operation (NOP) instruction.|true
+ASM_REQ|asm_demo|The asm_demo() function shall perform 32-bit integer addition.|true
+ASM_REQ|asm_demo|The asm_demo() function shall read the RFLAGS register.|true
+ASM_REQ|asm_demo|The asm_demo() function shall retrieve CPU identification information via the CPUID instruction.|true
+ASM_REQ|asm_demo|The asm_demo() function shall execute a memory fence (MFENCE) to ensure memory ordering.|true
+ASM_REQ|asm_demo|The asm_demo() function shall perform a Bit Scan Forward (BSF) to find the lowest set bit position.|true
+ASM_REQ|asm_demo|The asm_demo() function shall perform an atomic exchange (XCHG) of two integer values.|true
+ASM_REQ|asm_demo|The asm_demo() function shall perform a rotate-left (ROL) bit operation.|true
+FUNC_HEADING|main|main — all constructs exercised|false
+FUNC_REQ|main|The main() function shall main — all constructs exercised.|true
+FUNC_RETURN|main|The main() function shall return a value of type int.|true

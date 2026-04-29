@@ -1,0 +1,257 @@
+/*
+ * dd_header_import.dxl
+ * IBM DOORS DXL import script for DD_HEADER modules.
+ *
+ * Usage:
+ *   1. Open the target DD_HEADER module in DOORS.
+ *   2. Edit the FILE_PATH constant below.
+ *   3. Run via: Tools > Edit DXL... (paste & run) OR Tools > Run DXL File...
+ *
+ * Generated record types handled:
+ *   SECTION      -> Object Heading (section separator)
+ *   DEFINE       -> Object Text, Data Type, Size (Bytes), Description
+ *   DEFINE_FUNC  -> Object Text, Data Type, Description
+ *   TYPEDEF      -> Object Text, Data Type, Size (Bytes), Description
+ *   ENUM         -> Object Heading, Data Type, Size (Bytes), Description
+ *   ENUM_VAL     -> Object Text, Data Type, Size (Bytes)
+ *   STRUCT       -> Object Heading, Data Type, Size (Bytes), Description
+ *   STRUCT_FIELD -> Object Text, Data Type, Size (Bytes)
+ *   UNION        -> Object Heading, Data Type, Size (Bytes), Description
+ *   UNION_FIELD  -> Object Text, Data Type, Size (Bytes)
+ *   FUNCPTR      -> Object Text, Data Type, Size (Bytes), Description
+ *   INLINE       -> Object Text, Data Type, Description
+ */
+
+pragma runLim, 0   // no timeout for large files
+
+// =============================================================================
+// CONFIGURATION — edit this path before running
+// =============================================================================
+const string FILE_PATH = "C:/Development/pyCharmProjects/requirementGenerator/output/sample_DD_HEADER.txt"
+// =============================================================================
+
+// ---------------------------------------------------------------------------
+// Helper: extract the Nth pipe-delimited field from line (0-based index).
+// Returns "" if field does not exist.
+// ---------------------------------------------------------------------------
+string getField(string line, int n) {
+    int PIPE = 124   // ASCII '|'
+    int fieldIdx = 0
+    int start    = 0
+    int i        = 0
+    int len      = length(line)
+
+    while (i <= len) {
+        bool atDelim = (i < len) && (line[i] == PIPE)
+        bool atEnd   = (i == len)
+
+        if (atDelim || atEnd) {
+            if (fieldIdx == n) {
+                if (i > start) {
+                    return line[start, i - 1]
+                }
+                return ""
+            }
+            fieldIdx++
+            start = i + 1
+        }
+        i++
+    }
+    return ""
+}
+
+// ---------------------------------------------------------------------------
+// Main import logic
+// ---------------------------------------------------------------------------
+Module m = current Module
+if (null m) {
+    ack "ERROR: No module is open. Open the target DD_HEADER module first."
+    halt
+}
+
+Stream s = fileOpen(FILE_PATH, "r")
+if (null s) {
+    ack "ERROR: Cannot open file:\n" FILE_PATH
+    halt
+}
+
+string line      = ""
+int    lineCount = 0
+int    imported  = 0
+
+while (getLine(s, line)) {
+    lineCount++
+
+    // Skip blank lines and comment lines
+    if (length(line) == 0)  continue
+    if (line[0] == 35)      continue   // '#' = ASCII 35
+
+    string rtype = getField(line, 0)
+
+    // ------------------------------------------------------------------
+    // SECTION → heading object that separates logical groups
+    // ------------------------------------------------------------------
+    if (rtype == "SECTION") {
+        Object o = create(m)
+        o."Object Heading" = getField(line, 1)
+        imported++
+    }
+
+    // ------------------------------------------------------------------
+    // DEFINE / DEFINE_FUNC  (columns: Name|Value|DataType|Size|ObjText|Desc)
+    // ------------------------------------------------------------------
+    else if (rtype == "DEFINE" || rtype == "DEFINE_FUNC") {
+        Object o     = create(m)
+        string otext = getField(line, 5)
+        string dtype = getField(line, 3)
+        string sz    = getField(line, 4)
+        string desc  = getField(line, 6)
+
+        o."Object Text"  = otext
+        o."Data Type"    = dtype
+        if (sz != "" && sz != "0") {
+            o."Size (Bytes)" = sz
+        }
+        o."Description"  = desc
+        imported++
+    }
+
+    // ------------------------------------------------------------------
+    // TYPEDEF  (columns: Name|AliasOf|DataType|Size|ObjText|Desc)
+    // ------------------------------------------------------------------
+    else if (rtype == "TYPEDEF") {
+        Object o = create(m)
+        o."Object Text"  = getField(line, 5)
+        o."Data Type"    = getField(line, 2)
+        o."Size (Bytes)" = getField(line, 4)
+        o."Description"  = getField(line, 6)
+        imported++
+    }
+
+    // ------------------------------------------------------------------
+    // ENUM  (columns: Name|DataType|Size|ObjText|Desc)
+    // ------------------------------------------------------------------
+    else if (rtype == "ENUM") {
+        Object o = create(m)
+        o."Object Heading" = getField(line, 1)
+        o."Object Text"    = getField(line, 4)
+        o."Data Type"      = getField(line, 2)
+        o."Size (Bytes)"   = getField(line, 3)
+        o."Description"    = getField(line, 5)
+        imported++
+    }
+
+    // ------------------------------------------------------------------
+    // ENUM_VAL  (columns: EnumName|ValName|Value)
+    // ------------------------------------------------------------------
+    else if (rtype == "ENUM_VAL") {
+        Object o     = create(m)
+        string vname = getField(line, 2)
+        string vval  = getField(line, 3)
+        o."Object Text"  = vname " = " vval
+        o."Data Type"    = "int (enum value)"
+        o."Size (Bytes)" = "4"
+        imported++
+    }
+
+    // ------------------------------------------------------------------
+    // STRUCT  (columns: Name|DataType|Size|ObjText|Desc)
+    // ------------------------------------------------------------------
+    else if (rtype == "STRUCT") {
+        Object o = create(m)
+        o."Object Heading" = getField(line, 1)
+        o."Object Text"    = getField(line, 4)
+        o."Data Type"      = getField(line, 2)
+        o."Size (Bytes)"   = getField(line, 3)
+        o."Description"    = getField(line, 5)
+        imported++
+    }
+
+    // ------------------------------------------------------------------
+    // STRUCT_FIELD  (columns: StructName|FieldName|DataType|Size|BitWidth)
+    // ------------------------------------------------------------------
+    else if (rtype == "STRUCT_FIELD") {
+        Object o     = create(m)
+        string sname = getField(line, 1)
+        string fname = getField(line, 2)
+        string dtype = getField(line, 3)
+        string sz    = getField(line, 4)
+        string bw    = getField(line, 5)
+
+        string bitInfo = ""
+        if (bw != "" && bw != "0") {
+            bitInfo = "  [bit-field width: " bw "]"
+        }
+        o."Object Text"  = sname "." fname " : " dtype bitInfo
+        o."Data Type"    = dtype
+        o."Size (Bytes)" = sz
+        imported++
+    }
+
+    // ------------------------------------------------------------------
+    // UNION  (columns: Name|DataType|Size|ObjText|Desc)
+    // ------------------------------------------------------------------
+    else if (rtype == "UNION") {
+        Object o = create(m)
+        o."Object Heading" = getField(line, 1)
+        o."Object Text"    = getField(line, 4)
+        o."Data Type"      = getField(line, 2)
+        o."Size (Bytes)"   = getField(line, 3)
+        o."Description"    = getField(line, 5)
+        imported++
+    }
+
+    // ------------------------------------------------------------------
+    // UNION_FIELD  (columns: UnionName|FieldName|DataType|Size|BitWidth)
+    // ------------------------------------------------------------------
+    else if (rtype == "UNION_FIELD") {
+        Object o     = create(m)
+        string uname = getField(line, 1)
+        string fname = getField(line, 2)
+        string dtype = getField(line, 3)
+        string sz    = getField(line, 4)
+        string bw    = getField(line, 5)
+
+        string bitInfo = ""
+        if (bw != "" && bw != "0") {
+            bitInfo = "  [bit-field width: " bw "]"
+        }
+        o."Object Text"  = uname "." fname " : " dtype bitInfo
+        o."Data Type"    = dtype
+        o."Size (Bytes)" = sz
+        imported++
+    }
+
+    // ------------------------------------------------------------------
+    // FUNCPTR  (columns: Name|ReturnType|Params|Size|ObjText|Desc)
+    // ------------------------------------------------------------------
+    else if (rtype == "FUNCPTR") {
+        Object o    = create(m)
+        string name = getField(line, 1)
+        string ret  = getField(line, 2)
+        string par  = getField(line, 3)
+        o."Object Text"  = getField(line, 5)
+        o."Data Type"    = ret " (*)(" par ")"
+        o."Size (Bytes)" = "8"
+        o."Description"  = getField(line, 6)
+        imported++
+    }
+
+    // ------------------------------------------------------------------
+    // INLINE  (columns: Name|ReturnType|Params|Size|ObjText|Desc)
+    // ------------------------------------------------------------------
+    else if (rtype == "INLINE") {
+        Object o = create(m)
+        o."Object Text"  = getField(line, 5)
+        o."Data Type"    = getField(line, 2)
+        o."Description"  = getField(line, 6)
+        imported++
+    }
+    // Unknown record types are silently skipped
+}
+
+close(s)
+
+print "DD_HEADER import complete.\n"
+print "  Lines read : " lineCount "\n"
+print "  Objects created: " imported "\n"
